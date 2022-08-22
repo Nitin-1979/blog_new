@@ -10,14 +10,16 @@ class ArticlesController < ApplicationController
   def new
     @article = Article.new
   end
-  
+  def all_comments
+    @post = Post.find(params[:id])
+  end
   def create
     @article = Article.new(article_params)
     @article.user_id = session[:user_id]
     if @article.save
-      redirect_to @article
+      redirect_to articles_path
     else
-      render :new, status: :unprocessable_entity
+      redirect_to articles_path, status: :unprocessable_entity
     end
   end
 
@@ -29,7 +31,7 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
 
     if @article.update(article_params)
-      redirect_to @article
+      redirect_to articles_path
     else
       render :edit, status: :unprocessable_entity
     end

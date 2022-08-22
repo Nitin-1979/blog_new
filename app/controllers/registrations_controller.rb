@@ -1,4 +1,5 @@
 class RegistrationsController < ApplicationController
+  before_action :authenticate_user
   def new
     @user = User.new
   end
@@ -15,6 +16,11 @@ class RegistrationsController < ApplicationController
   end
   
   private 
+  def authenticate_user
+    if Current.user
+       redirect_to root_path
+    end
+  end
   def user_params
    params.require(:user).permit(:name,:password,:password_confirmation,:dob,:photo,:admin_user)
   end

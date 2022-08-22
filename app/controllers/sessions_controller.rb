@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  before_action :authenticate_user , only: :new
   def new 
     @user = User.new
   end
@@ -7,6 +8,7 @@ class SessionsController < ApplicationController
 
     if @user.present? && @user.authenticate(params[:password])
         session[:user_id] = @user.id
+        flash[:user_id] = 'Successfully checked in'
         redirect_to root_path
     else
         render :new
@@ -19,6 +21,11 @@ class SessionsController < ApplicationController
   end
 
   private
+  def authenticate_user
+    if Current.user
+       redirect_to '/'
+    end
+  end
   def login_params
     params.require(:user).permit(:name,:password,:password_confirmation)
   end

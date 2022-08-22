@@ -14,26 +14,33 @@
 
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/">Blog page</a>
+  <% if Current.user %>
+    <a class="navbar-brand" href="/" >Blog page</a>
+  <% else %>
+  <a style="margin-left:42% ;font-size:30px" href="/" >Blog page</a>
+  <% end %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       <% if Current.user %>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home Feed</a>
+        <li style="margin-left:540px">
+          <a class="nav-link active"  href="/"><h1>Home</h1></a>
         </li>
-        
-        <li class="nav-item dropdown">
-          <a >
+          <a class="nav-link active" style="margin-left:400px">
             <%= Current.user.name %>
+            <% if Current.user.admin_user %>
+            [Admin]
+            <% end %>
           </a>
-
-            <li><%= link_to "Logout", logout_path,data: {turbo_method: :delete}
+          <% if Current.user.admin_user %>
+          <li>
+            <a class="nav-link active" aria-current="page" href="/users/">Profiles</a>
+          </li>
+          <% end %>
+          <li class="nav-link active" ><%= link_to "Logout", logout_path,data: {turbo_method: :delete}
             %></li>
-      
-        </li>
         <% end %>
       </ul>
      
