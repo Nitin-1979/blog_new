@@ -39,8 +39,14 @@
             <a class="nav-link active" aria-current="page" href="/users/">Profiles</a>
           </li>
           <% end %>
+          <li>
+            <a class="nav-link active" aria-current="page" href="/events">Events</a>
+          </li>
           <li class="nav-link active" ><%= link_to "Logout", logout_path,data: {turbo_method: :delete}
             %></li>
+            <% flash.each do |message_type, message| %>
+              <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
+            <% end %>
         <% end %>
       </ul>
      

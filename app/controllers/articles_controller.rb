@@ -10,13 +10,12 @@ class ArticlesController < ApplicationController
   def new
     @article = Article.new
   end
-  def all_comments
-    @post = Post.find(params[:id])
-  end
+
   def create
     @article = Article.new(article_params)
     @article.user_id = session[:user_id]
     if @article.save
+      flash[:success] = "Post created"
       redirect_to articles_path
     else
       redirect_to articles_path, status: :unprocessable_entity
